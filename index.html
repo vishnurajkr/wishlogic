@@ -2,103 +2,164 @@
 
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Fynixo - Smart Finance Tracker</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Inter', sans-serif;
-      background: #0f172a;
-      color: white;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fynixo</title>
 
-```
-.container {
-  max-width: 1100px;
-  margin: auto;
-  padding: 40px 20px;
-  text-align: center;
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+  font-family:'Inter',sans-serif;
+  background:#020617;
+  color:white;
+  overflow-x:hidden;
 }
 
-h1 {
-  font-size: 48px;
-  margin-bottom: 10px;
+/* Gradient blobs */
+body::before, body::after{
+  content:'';
+  position:fixed;
+  width:600px;height:600px;
+  filter:blur(120px);
+  z-index:-1;
+}
+body::before{
+  background:#6366f1;
+  top:-200px;left:-200px;
+}
+body::after{
+  background:#22d3ee;
+  bottom:-200px;right:-200px;
 }
 
-p {
-  color: #94a3b8;
-  font-size: 18px;
+.container{
+  max-width:1200px;
+  margin:auto;
+  padding:80px 20px;
+  text-align:center;
 }
 
-.btn {
-  display: inline-block;
-  margin-top: 20px;
-  padding: 12px 24px;
-  background: linear-gradient(135deg, #6366f1, #22d3ee);
-  border-radius: 8px;
-  text-decoration: none;
-  color: white;
-  font-weight: 600;
+h1{
+  font-size:64px;
+  background:linear-gradient(135deg,#6366f1,#22d3ee);
+  -webkit-background-clip:text;
+  color:transparent;
 }
 
-.section {
-  margin-top: 80px;
+.tagline{
+  margin-top:15px;
+  color:#94a3b8;
+  font-size:20px;
 }
 
-.features {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 20px;
-  margin-top: 40px;
+.btn{
+  display:inline-block;
+  margin-top:30px;
+  padding:14px 30px;
+  border-radius:12px;
+  background:linear-gradient(135deg,#6366f1,#22d3ee);
+  color:white;
+  text-decoration:none;
+  font-weight:600;
+  transition:0.3s;
 }
 
-.card {
-  background: rgba(255,255,255,0.05);
-  padding: 20px;
-  border-radius: 12px;
-  backdrop-filter: blur(10px);
+.btn:hover{transform:scale(1.05);}
+
+.section{margin-top:120px;}
+
+.glass{
+  background:rgba(255,255,255,0.05);
+  backdrop-filter:blur(14px);
+  border-radius:20px;
+  border:1px solid rgba(255,255,255,0.08);
 }
 
-footer {
-  margin-top: 100px;
-  font-size: 14px;
-  color: #64748b;
+.features{
+  margin-top:50px;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:25px;
 }
-```
 
-  </style>
+.feature{
+  padding:30px;
+  transition:0.3s;
+}
+
+.feature:hover{
+  transform:translateY(-10px);
+}
+
+.screens{
+  margin-top:60px;
+  display:flex;
+  gap:25px;
+  overflow-x:auto;
+}
+
+.screen{
+  min-width:260px;
+  height:520px;
+  border-radius:25px;
+  background:rgba(255,255,255,0.06);
+}
+
+footer{
+  margin-top:140px;
+  color:#64748b;
+}
+</style>
+
 </head>
+
 <body>
 
-  <div class="container">
-    <h1>Fynixo</h1>
-    <p>Track money smarter. Build better financial habits.</p>
-    <a class="btn" href="#">Download APK</a>
+<div class="container">
 
-```
+<h1>Fynixo</h1>
+<p class="tagline">Track money smarter. Build better financial habits.</p>
+
+<!-- 🔥 APK DOWNLOAD BUTTON -->
+
+<a class="btn" 
+href="https://github.com/vishnurajkr/wishlogic/releases/download/v1.0.0/app-release.apk" 
+target="_blank">
+📥 Download APK </a>
+
+<p style="margin-top:10px;color:#64748b;">
+v1.0 • Secure download
+</p>
+
 <div class="section">
   <h2>Features</h2>
+
   <div class="features">
-    <div class="card">📊 Smart Analytics</div>
-    <div class="card">💸 Real-time Balance Tracking</div>
-    <div class="card">🎯 Budget Management</div>
-    <div class="card">🔐 100% Offline & Secure</div>
+    <div class="glass feature">📊 Smart Analytics</div>
+    <div class="glass feature">💸 Real-time Tracking</div>
+    <div class="glass feature">🎯 Budget Control</div>
+    <div class="glass feature">🔐 Offline & Secure</div>
   </div>
 </div>
 
 <div class="section">
-  <h2>Built with modern tech</h2>
-  <p>Flutter • SQLite • Clean Architecture</p>
+  <h2>App Preview</h2>
+
+  <div class="screens">
+    <div class="screen"></div>
+    <div class="screen"></div>
+    <div class="screen"></div>
+  </div>
 </div>
 
 <footer>
-  © 2026 Fynixo — Built by WishLogic
+Built by WishLogic • 2026
 </footer>
-```
 
-  </div>
+</div>
 
 </body>
 </html>
