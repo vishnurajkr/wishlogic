@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Fynixo</title>
+<title>WishLogic</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 
@@ -18,7 +18,7 @@ body{
   overflow-x:hidden;
 }
 
-/* Gradient blobs */
+/* Background glow */
 body::before, body::after{
   content:'';
   position:fixed;
@@ -42,8 +42,9 @@ body::after{
   text-align:center;
 }
 
+/* HERO */
 h1{
-  font-size:64px;
+  font-size:60px;
   background:linear-gradient(135deg,#6366f1,#22d3ee);
   -webkit-background-clip:text;
   color:transparent;
@@ -55,22 +56,7 @@ h1{
   font-size:20px;
 }
 
-.btn{
-  display:inline-block;
-  margin-top:30px;
-  padding:14px 30px;
-  border-radius:12px;
-  background:linear-gradient(135deg,#6366f1,#22d3ee);
-  color:white;
-  text-decoration:none;
-  font-weight:600;
-  transition:0.3s;
-}
-
-.btn:hover{transform:scale(1.05);}
-
-.section{margin-top:120px;}
-
+/* Glass */
 .glass{
   background:rgba(255,255,255,0.05);
   backdrop-filter:blur(14px);
@@ -78,38 +64,47 @@ h1{
   border:1px solid rgba(255,255,255,0.08);
 }
 
+/* Sections */
+.section{margin-top:120px;}
+
+.btn{
+  display:inline-block;
+  margin-top:20px;
+  padding:12px 24px;
+  border-radius:10px;
+  background:linear-gradient(135deg,#6366f1,#22d3ee);
+  color:white;
+  text-decoration:none;
+  font-weight:600;
+}
+
+/* PRODUCT CARD */
+.product{
+  margin-top:40px;
+  padding:40px;
+}
+
 .features{
-  margin-top:50px;
+  margin-top:30px;
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
-  gap:25px;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:20px;
 }
 
 .feature{
-  padding:30px;
-  transition:0.3s;
+  padding:20px;
 }
 
-.feature:hover{
-  transform:translateY(-10px);
-}
-
-.screens{
-  margin-top:60px;
-  display:flex;
-  gap:25px;
-  overflow-x:auto;
-}
-
-.screen{
-  min-width:260px;
-  height:520px;
-  border-radius:25px;
-  background:rgba(255,255,255,0.06);
+/* FUTURE */
+.products{
+  margin-top:40px;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:20px;
 }
 
 footer{
-  margin-top:140px;
+  margin-top:120px;
   color:#64748b;
 }
 </style>
@@ -120,43 +115,54 @@ footer{
 
 <div class="container">
 
-<h1>Fynixo</h1>
-<p class="tagline">Track money smarter. Build better financial habits.</p>
+<!-- BRAND -->
 
-<!-- 🔥 APK DOWNLOAD BUTTON -->
+<h1>WishLogic</h1>
+<p class="tagline">Building modern financial tools & experiences</p>
 
-<a class="btn" 
-href="https://github.com/vishnurajkr/wishlogic/releases/download/v1.0.0/app-release.apk" 
-target="_blank">
-📥 Download APK </a>
-
-<p style="margin-top:10px;color:#64748b;">
-v1.0 • Secure download
-</p>
+<!-- FEATURED PRODUCT -->
 
 <div class="section">
-  <h2>Features</h2>
+  <h2>Featured Product</h2>
 
-  <div class="features">
-    <div class="glass feature">📊 Smart Analytics</div>
-    <div class="glass feature">💸 Real-time Tracking</div>
-    <div class="glass feature">🎯 Budget Control</div>
-    <div class="glass feature">🔐 Offline & Secure</div>
+  <div class="glass product">
+    <h3 style="font-size:28px;">Fynixo</h3>
+    <p style="margin-top:10px;color:#94a3b8;">
+      Smart personal finance tracking app with real-time insights.
+    </p>
+
+```
+<!-- APK BUTTON -->
+<a class="btn" 
+href="https://github.com/YOUR_USERNAME/YOUR_REPO/releases/download/v1.0.0/app-release.apk" 
+target="_blank">
+📥 Download APK
+</a>
+
+<div class="features">
+  <div class="glass feature">📊 Analytics</div>
+  <div class="glass feature">💸 Tracking</div>
+  <div class="glass feature">🎯 Budgets</div>
+  <div class="glass feature">🔐 Offline</div>
+</div>
+```
+
   </div>
 </div>
 
-<div class="section">
-  <h2>App Preview</h2>
+<!-- FUTURE PRODUCTS -->
 
-  <div class="screens">
-    <div class="screen"></div>
-    <div class="screen"></div>
-    <div class="screen"></div>
+<div class="section">
+  <h2>More Coming Soon</h2>
+
+  <div class="products">
+    <div class="glass feature">🚀 New App</div>
+    <div class="glass feature">🧠 AI Tools</div>
   </div>
 </div>
 
 <footer>
-Built by WishLogic • 2026
+© 2026 WishLogic
 </footer>
 
 </div>
