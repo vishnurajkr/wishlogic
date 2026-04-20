@@ -1,171 +1,472 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>WishLogic</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Wishlogic — Apps That Think Ahead</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet"/>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --teal:#1D9E75;--teal-d:#0F6E56;--teal-l:#5DCAA5;
+  --purple:#7F77DD;--purple-l:#AFA9EC;--purple-d:#534AB7;
+  --bg:#090d12;--bg2:#0e1419;--bg3:#111820;
+  --glass:rgba(255,255,255,0.03);--gb:rgba(255,255,255,0.07);
+  --text:#f0ede8;--muted:#7a7870;--faint:#2e3540;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-size:16px;line-height:1.7;overflow-x:hidden}
+body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");pointer-events:none;z-index:0;opacity:.6}
+.orb{position:fixed;border-radius:50%;filter:blur(130px);pointer-events:none;z-index:0}
+.orb-t{width:700px;height:700px;background:radial-gradient(circle,rgba(29,158,117,.11) 0%,transparent 70%);top:-200px;right:-200px}
+.orb-p{width:600px;height:600px;background:radial-gradient(circle,rgba(127,119,221,.09) 0%,transparent 70%);bottom:100px;left:-200px}
 
-body{
-  font-family:'Inter',sans-serif;
-  background:#020617;
-  color:white;
-  overflow-x:hidden;
-}
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;height:60px;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;background:rgba(9,13,18,.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--gb)}
+.nav-logo{text-decoration:none;display:flex;align-items:center}
+.nav-links{display:flex;align-items:center;gap:1.75rem;list-style:none}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:14px;font-weight:400;transition:color .2s}
+.nav-links a:hover{color:var(--text)}
+.nav-dl{background:linear-gradient(135deg,var(--teal),var(--purple));color:#fff!important;padding:8px 18px;border-radius:999px;font-size:13px!important;font-weight:500!important;transition:opacity .2s!important;white-space:nowrap}
+.nav-dl:hover{opacity:.82}
+.nav-ham{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:4px}
+.nav-ham span{display:block;width:22px;height:1.5px;background:var(--muted);transition:all .3s;border-radius:2px}
+.mob-menu{display:none;position:fixed;top:60px;left:0;right:0;background:rgba(9,13,18,.97);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);padding:1.5rem 1.5rem;border-bottom:1px solid var(--gb);z-index:99;flex-direction:column}
+.mob-menu.open{display:flex}
+.mob-menu a{color:var(--muted);text-decoration:none;font-size:15px;padding:.75rem 0;border-bottom:1px solid var(--faint);transition:color .2s}
+.mob-menu a:last-child{border-bottom:none;color:var(--teal-l);font-weight:500;margin-top:.25rem}
+.mob-menu a:hover{color:var(--text)}
 
-/* Background glow */
-body::before, body::after{
-  content:'';
-  position:fixed;
-  width:600px;height:600px;
-  filter:blur(120px);
-  z-index:-1;
-}
-body::before{
-  background:#6366f1;
-  top:-200px;left:-200px;
-}
-body::after{
-  background:#22d3ee;
-  bottom:-200px;right:-200px;
-}
-
-.container{
-  max-width:1200px;
-  margin:auto;
-  padding:80px 20px;
-  text-align:center;
-}
+/* BUTTONS */
+.btn-p{display:inline-flex;align-items:center;gap:7px;background:linear-gradient(135deg,var(--teal),var(--purple));color:#fff;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:500;padding:13px 26px;border-radius:999px;text-decoration:none;transition:transform .2s,box-shadow .2s;box-shadow:0 0 30px rgba(29,158,117,.25)}
+.btn-p:hover{transform:translateY(-2px);box-shadow:0 10px 38px rgba(29,158,117,.36)}
+.btn-g{display:inline-flex;align-items:center;gap:7px;background:transparent;color:var(--text);font-family:'DM Sans',sans-serif;font-size:15px;font-weight:400;padding:12px 22px;border-radius:999px;text-decoration:none;border:1px solid var(--gb);transition:border-color .2s,background .2s}
+.btn-g:hover{border-color:rgba(255,255,255,.17);background:var(--glass)}
 
 /* HERO */
-h1{
-  font-size:60px;
-  background:linear-gradient(135deg,#6366f1,#22d3ee);
-  -webkit-background-clip:text;
-  color:transparent;
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:100px 1.5rem 80px;position:relative;z-index:1}
+.hero-eye{font-size:10px;font-weight:500;letter-spacing:4px;text-transform:uppercase;color:var(--teal);margin-bottom:1.5rem;opacity:0;animation:fadeUp .8s .2s forwards}
+.hero-title{font-family:'Syne',sans-serif;font-size:clamp(2.8rem,9vw,6.5rem);font-weight:800;line-height:1.0;letter-spacing:-3px;max-width:860px;margin-bottom:1.5rem;opacity:0;animation:fadeUp .8s .35s forwards}
+.grad{background:linear-gradient(135deg,var(--teal-l) 0%,var(--purple-l) 55%,#fff 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:clamp(15px,2.5vw,18px);color:var(--muted);max-width:480px;line-height:1.7;margin-bottom:3rem;font-weight:300;opacity:0;animation:fadeUp .8s .5s forwards}
+.hero-btns{display:flex;gap:.875rem;align-items:center;flex-wrap:wrap;justify-content:center;opacity:0;animation:fadeUp .8s .65s forwards}
+.hero-app{margin:4rem auto 0;opacity:0;animation:fadeUp .8s .8s forwards}
+.hero-app img{width:130px;height:130px;border-radius:30px;box-shadow:0 0 0 1px rgba(127,119,221,.2),0 40px 80px rgba(0,0,0,.65),0 0 60px rgba(29,158,117,.14),0 0 130px rgba(127,119,221,.09);animation:float 6s ease-in-out infinite;display:block}
+.scroll-cue{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:6px;opacity:0;animation:fadeIn 1s 1.8s forwards}
+.scroll-cue span{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--faint)}
+.scroll-cue::after{content:'';width:1px;height:36px;background:linear-gradient(to bottom,var(--faint),transparent);animation:sline 2.5s ease-in-out infinite}
+
+/* LAYOUT */
+section{position:relative;z-index:1}
+.container{max-width:1160px;margin:0 auto;padding:0 1.5rem}
+.sec-label{font-size:10px;font-weight:500;letter-spacing:4px;text-transform:uppercase;margin-bottom:1.25rem}
+.sec-title{font-family:'Syne',sans-serif;font-size:clamp(1.9rem,4vw,3rem);font-weight:700;letter-spacing:-1.5px;line-height:1.1;margin-bottom:1.5rem}
+.divider{height:1px;background:linear-gradient(90deg,transparent,var(--gb),transparent);margin:0 1.5rem;position:relative;z-index:1}
+
+/* PRODUCT */
+.product-sec{padding:110px 0}
+.product-card{background:var(--bg3);border:1px solid var(--gb);border-radius:24px;padding:52px;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;position:relative;overflow:hidden;transition:border-color .3s}
+.product-card:hover{border-color:rgba(29,158,117,.17)}
+.product-card::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at top right,rgba(29,158,117,.055) 0%,transparent 55%);pointer-events:none}
+.prod-badge{display:inline-flex;align-items:center;gap:6px;font-size:10px;font-weight:500;letter-spacing:2.5px;text-transform:uppercase;color:var(--teal);border:1px solid rgba(29,158,117,.28);border-radius:999px;padding:4px 14px;margin-bottom:1.5rem}
+.prod-badge::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--teal);box-shadow:0 0 8px var(--teal);animation:pulse 2s ease-in-out infinite}
+.prod-name{font-family:'Syne',sans-serif;font-size:3.2rem;font-weight:800;letter-spacing:-2px;background:linear-gradient(135deg,var(--teal-l),var(--purple-l));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:.5rem;line-height:1}
+.prod-tagline{font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--muted);margin-bottom:1.5rem}
+.prod-desc{color:var(--muted);font-size:15px;line-height:1.8;font-weight:300;margin-bottom:2rem}
+.feat-list{list-style:none;display:flex;flex-direction:column;gap:10px;margin-bottom:2.5rem}
+.feat-list li{display:flex;align-items:flex-start;gap:10px;font-size:14px;color:var(--muted)}
+.feat-list li .dot{width:16px;height:16px;border-radius:50%;background:linear-gradient(135deg,var(--teal),var(--purple));flex-shrink:0;margin-top:4px}
+.feat-list li span{color:var(--text)}
+.prod-btns{display:flex;gap:.875rem;flex-wrap:wrap}
+.prod-vis{display:flex;justify-content:center;align-items:center;position:relative}
+.prod-vis .glow{position:absolute;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,rgba(29,158,117,.15) 0%,rgba(127,119,221,.08) 40%,transparent 70%);filter:blur(35px);z-index:0}
+.prod-vis img{width:200px;height:200px;border-radius:44px;box-shadow:0 0 0 1px rgba(127,119,221,.18),0 60px 100px rgba(0,0,0,.7),0 0 80px rgba(29,158,117,.11);animation:float 7s ease-in-out infinite;position:relative;z-index:1;display:block}
+
+/* TECH */
+.tech-sec{padding:70px 0}
+.tech-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--gb);border:1px solid var(--gb);border-radius:18px;overflow:hidden;margin-top:2.5rem}
+.tech-item{background:var(--bg3);padding:1.75rem 1.25rem;transition:background .2s}
+.tech-item:hover{background:rgba(255,255,255,.025)}
+.tech-ico{font-size:22px;margin-bottom:8px}
+.tech-name{font-family:'Syne',sans-serif;font-size:14px;font-weight:600;color:var(--text);margin-bottom:4px}
+.tech-desc{font-size:12px;color:var(--muted);line-height:1.5}
+
+/* FEATURES */
+.features-sec{padding:110px 0}
+.feat-hdr{max-width:520px;margin-bottom:3.5rem}
+.feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem}
+.feat-card{background:var(--bg3);border:1px solid var(--gb);border-radius:18px;padding:1.875rem;transition:transform .3s,border-color .3s,box-shadow .3s}
+.feat-card:hover{transform:translateY(-4px);border-color:rgba(127,119,221,.17);box-shadow:0 20px 40px rgba(0,0,0,.28)}
+.feat-card.wide{grid-column:span 2}
+.fc-icon{width:42px;height:42px;border-radius:11px;display:flex;align-items:center;justify-content:center;margin-bottom:1.1rem;font-size:18px}
+.fc-icon.t{background:rgba(29,158,117,.14)}
+.fc-icon.p{background:rgba(127,119,221,.14)}
+.fc-icon.m{background:linear-gradient(135deg,rgba(29,158,117,.14),rgba(127,119,221,.14))}
+.fc-title{font-family:'Syne',sans-serif;font-size:17px;font-weight:700;letter-spacing:-.4px;margin-bottom:.5rem}
+.fc-desc{font-size:13.5px;color:var(--muted);line-height:1.65;font-weight:300}
+
+/* STUDIO */
+.studio-sec{padding:110px 0}
+.studio-inner{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start}
+.studio-text p{color:var(--muted);font-weight:300;line-height:1.8;margin-bottom:1.25rem;font-size:15px}
+.roadmap{background:var(--bg3);border:1px solid var(--gb);border-radius:20px;overflow:hidden}
+.roadmap-hdr{padding:1.2rem 1.5rem;border-bottom:1px solid var(--gb);font-family:'Syne',sans-serif;font-size:11px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:var(--muted)}
+.road-item{display:flex;align-items:center;gap:1rem;padding:1.1rem 1.5rem;border-bottom:1px solid var(--faint)}
+.road-item:last-child{border-bottom:none}
+.road-ico{width:36px;height:36px;border-radius:9px;border:1px dashed rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.road-label{font-size:13px;font-weight:500;color:var(--text)}
+.road-sub{font-size:11px;color:var(--muted);margin-top:1px}
+.road-tag{margin-left:auto;font-size:9.5px;letter-spacing:2px;text-transform:uppercase;border-radius:999px;padding:3px 10px;white-space:nowrap;flex-shrink:0}
+.road-tag.soon{color:var(--teal);border:1px solid rgba(29,158,117,.25)}
+.road-tag.plan{color:var(--purple);border:1px solid rgba(127,119,221,.22)}
+.road-tag.tba{color:var(--muted);border:1px solid rgba(255,255,255,.1)}
+
+/* CTA */
+.cta-sec{padding:120px 1.5rem;text-align:center;position:relative;overflow:hidden}
+.cta-sec::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(29,158,117,.065) 0%,transparent 55%);pointer-events:none}
+.cta-inner{position:relative;z-index:1;max-width:640px;margin:0 auto}
+.cta-title{font-family:'Syne',sans-serif;font-size:clamp(2rem,5vw,3.4rem);font-weight:800;letter-spacing:-2px;line-height:1.1;margin-bottom:1.25rem}
+.cta-sub{font-size:17px;color:var(--muted);font-weight:300;margin-bottom:2.75rem}
+.cta-btns{display:flex;gap:.875rem;justify-content:center;flex-wrap:wrap}
+
+/* FOOTER */
+footer{border-top:1px solid var(--gb)}
+.footer-inner{max-width:1160px;margin:0 auto;padding:2.5rem 1.5rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+.footer-links{display:flex;gap:1.5rem;list-style:none;flex-wrap:wrap}
+.footer-links a{font-size:13px;color:var(--muted);text-decoration:none;transition:color .2s}
+.footer-links a:hover{color:var(--text)}
+.footer-copy{font-size:12px;color:var(--faint)}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease}
+.reveal.visible{opacity:1;transform:none}
+
+/* KEYFRAMES */
+@keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-11px)}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+@keyframes sline{0%{opacity:0;transform:scaleY(0);transform-origin:top}50%{opacity:1;transform:scaleY(1);transform-origin:top}100%{opacity:0;transform:scaleY(1);transform-origin:bottom}}
+
+/* RESPONSIVE */
+@media(max-width:960px){
+  .product-card{grid-template-columns:1fr;gap:2.5rem;padding:2.5rem}
+  .prod-vis{order:-1}
+  .feat-grid{grid-template-columns:1fr 1fr}
+  .feat-card.wide{grid-column:span 2}
+  .studio-inner{grid-template-columns:1fr;gap:2.5rem}
+  .tech-grid{grid-template-columns:repeat(3,1fr)}
 }
-
-.tagline{
-  margin-top:15px;
-  color:#94a3b8;
-  font-size:20px;
+@media(max-width:680px){
+  nav{padding:0 1rem}
+  .nav-links{display:none}
+  .nav-ham{display:flex}
+  .hero-title{letter-spacing:-1.5px}
+  .feat-grid{grid-template-columns:1fr}
+  .feat-card.wide{grid-column:span 1}
+  .tech-grid{grid-template-columns:repeat(2,1fr)}
+  .product-card{padding:1.75rem}
+  .prod-name{font-size:2.4rem}
+  .hero-app img{width:108px;height:108px}
+  .footer-inner{flex-direction:column;align-items:flex-start}
+  .product-sec,.features-sec,.studio-sec,.tech-sec{padding-top:80px;padding-bottom:80px}
 }
-
-/* Glass */
-.glass{
-  background:rgba(255,255,255,0.05);
-  backdrop-filter:blur(14px);
-  border-radius:20px;
-  border:1px solid rgba(255,255,255,0.08);
-}
-
-/* Sections */
-.section{margin-top:120px;}
-
-.btn{
-  display:inline-block;
-  margin-top:20px;
-  padding:12px 24px;
-  border-radius:10px;
-  background:linear-gradient(135deg,#6366f1,#22d3ee);
-  color:white;
-  text-decoration:none;
-  font-weight:600;
-}
-
-/* PRODUCT CARD */
-.product{
-  margin-top:40px;
-  padding:40px;
-}
-
-.features{
-  margin-top:30px;
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-  gap:20px;
-}
-
-.feature{
-  padding:20px;
-}
-
-/* FUTURE */
-.products{
-  margin-top:40px;
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:20px;
-}
-
-footer{
-  margin-top:120px;
-  color:#64748b;
+@media(max-width:420px){
+  .hero-btns{flex-direction:column;align-items:stretch;width:100%;max-width:300px}
+  .btn-p,.btn-g{justify-content:center}
+  .prod-btns{flex-direction:column}
+  .cta-btns{flex-direction:column;align-items:center}
 }
 </style>
-
 </head>
-
 <body>
+<div class="orb orb-t"></div>
+<div class="orb orb-p"></div>
 
-<div class="container">
-
-<!-- BRAND -->
-
-<h1>WishLogic</h1>
-<p class="tagline">Building modern financial tools & experiences</p>
-
-<!-- FEATURED PRODUCT -->
-
-<div class="section">
-  <h2>Featured Product</h2>
-
-  <div class="glass product">
-    <h3 style="font-size:28px;">Fynixo</h3>
-    <p style="margin-top:10px;color:#94a3b8;">
-      Smart personal finance tracking app with real-time insights.
-    </p>
-
-```
-<!-- APK BUTTON -->
-<a class="btn" 
-href="https://github.com/vishnurajkr/wishlogic/releases/download/v1.0.0/app-release.apk" 
-target="_blank">
-📥 Download APK
-</a>
-
-<div class="features">
-  <div class="glass feature">📊 Analytics</div>
-  <div class="glass feature">💸 Tracking</div>
-  <div class="glass feature">🎯 Budgets</div>
-  <div class="glass feature">🔐 Offline</div>
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo" aria-label="Wishlogic home">
+    <svg width="152" height="30" viewBox="0 0 152 32" fill="none" xmlns="http://www.w3.org/2000/svg" style="height:28px;width:auto">
+      <defs>
+        <linearGradient id="wm" x1="0" y1="24" x2="24" y2="2" gradientUnits="userSpaceOnUse">
+          <stop stop-color="#1D9E75"/>
+          <stop offset="1" stop-color="#7F77DD"/>
+        </linearGradient>
+        <linearGradient id="wt" x1="30" y1="0" x2="152" y2="0" gradientUnits="userSpaceOnUse">
+          <stop stop-color="#5DCAA5"/>
+          <stop offset="1" stop-color="#AFA9EC"/>
+        </linearGradient>
+      </defs>
+      <!-- W mark: two connected V shapes with rising dots -->
+      <path d="M2 25 L7 8 L12 18 L17 8 L22 25" fill="none" stroke="url(#wm)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <!-- Rising accent dots -->
+      <circle cx="7" cy="8" r="2" fill="#1D9E75" opacity=".7"/>
+      <circle cx="17" cy="8" r="2" fill="#7F77DD" opacity=".7"/>
+      <circle cx="22" cy="25" r="2.2" fill="#AFA9EC"/>
+      <!-- Wordmark -->
+      <text x="31" y="22" font-family="'Syne',system-ui,sans-serif" font-size="17" font-weight="800" letter-spacing="-0.5" fill="url(#wt)">Wishlogic</text>
+    </svg>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#product">Products</a></li>
+    <li><a href="#features">Features</a></li>
+    <li><a href="#studio">Studio</a></li>
+    <li><a href="https://github.com/vishnurajkr/wishlogic/releases/download/v1.0.0/app-release.apk" class="nav-dl">Download Fynixo</a></li>
+  </ul>
+  <button class="nav-ham" id="ham" aria-label="Open menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="mob-menu" id="mobMenu" role="navigation">
+  <a href="#product" onclick="closeMob()">Products</a>
+  <a href="#features" onclick="closeMob()">Features</a>
+  <a href="#studio" onclick="closeMob()">Studio</a>
+  <a href="https://github.com/vishnurajkr/wishlogic/releases/download/v1.0.0/app-release.apk">&#8595; Download Fynixo (.apk)</a>
 </div>
-```
 
+<!-- HERO -->
+<section class="hero" id="home">
+  <p class="hero-eye">Wishlogic Studio</p>
+  <h1 class="hero-title">Apps that<br/><span class="grad">think ahead.</span></h1>
+  <p class="hero-sub">We build premium, privacy-first mobile experiences — crafted with intention, shipped with care.</p>
+  <div class="hero-btns">
+    <a href="https://github.com/vishnurajkr/wishlogic/releases/download/v1.0.0/app-release.apk" class="btn-p">
+      Download Fynixo
+      <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M7.5 2v9M3.5 7.5l4 4 4-4" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+    <a href="#studio" class="btn-g">About the studio</a>
   </div>
-</div>
-
-<!-- FUTURE PRODUCTS -->
-
-<div class="section">
-  <h2>More Coming Soon</h2>
-
-  <div class="products">
-    <div class="glass feature">🚀 New App</div>
-    <div class="glass feature">🧠 AI Tools</div>
+  <div class="hero-app">
+    <img src="fynixo_app_icon_1776662807743.png" alt="Fynixo app icon" width="130" height="130" loading="eager"/>
   </div>
-</div>
+  <div class="scroll-cue" aria-hidden="true"><span>scroll</span></div>
+</section>
 
+<div class="divider"></div>
+
+<!-- PRODUCT -->
+<section id="product">
+  <div class="container product-sec">
+    <p class="sec-label reveal" style="color:var(--teal)">Flagship App</p>
+    <h2 class="sec-title reveal" style="max-width:560px;margin-bottom:3rem">Meet Fynixo — your finances, <span style="color:var(--teal-l)">finally clear.</span></h2>
+    <div class="product-card reveal" id="fynixo">
+      <div>
+        <div class="prod-badge">Live — v1.0.0</div>
+        <h3 class="prod-name">Fynixo</h3>
+        <p class="prod-tagline">Track · Budget · Grow</p>
+        <p class="prod-desc">A premium personal finance tracker for people who want full control — no subscription, no cloud, no compromise. All your data stays right on your device.</p>
+        <ul class="feat-list">
+          <li><div class="dot"></div><span>Real-time balance with a spending breakdown donut chart</span></li>
+          <li><div class="dot"></div><span>Category-wise budgets with smart limit tracking</span></li>
+          <li><div class="dot"></div><span>Beautiful analytics that actually make sense</span></li>
+          <li><div class="dot"></div><span>100% offline — no account, no sync required</span></li>
+          <li><div class="dot"></div><span>Glassmorphic dark UI with smooth micro-animations</span></li>
+        </ul>
+        <div class="prod-btns">
+          <a href="https://github.com/vishnurajkr/wishlogic/releases/download/v1.0.0/app-release.apk" class="btn-p" style="font-size:14px;padding:11px 22px">
+            Download APK
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1v9M3 6.5l4 4 4-4" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a href="#features" class="btn-g" style="font-size:14px;padding:10px 18px">See all features</a>
+        </div>
+      </div>
+      <div class="prod-vis">
+        <div class="glow"></div>
+        <img src="fynixo_app_icon_1776662807743.png" alt="Fynixo" width="200" height="200" loading="lazy"/>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- TECH -->
+<section>
+  <div class="container tech-sec">
+    <p class="sec-label reveal" style="color:var(--purple)">Built with</p>
+    <div class="tech-grid reveal">
+      <div class="tech-item">
+        <div class="tech-ico">🐦</div>
+        <div class="tech-name">Flutter</div>
+        <div class="tech-desc">Cross-platform pixel-perfect UI</div>
+      </div>
+      <div class="tech-item">
+        <div class="tech-ico">🗄️</div>
+        <div class="tech-name">SQLite</div>
+        <div class="tech-desc">Local-first, stays on your device</div>
+      </div>
+      <div class="tech-item">
+        <div class="tech-ico">📊</div>
+        <div class="tech-name">fl_chart</div>
+        <div class="tech-desc">Fluid animated finance charts</div>
+      </div>
+      <div class="tech-item">
+        <div class="tech-ico">⚡</div>
+        <div class="tech-name">Provider</div>
+        <div class="tech-desc">Reactive state, always in sync</div>
+      </div>
+      <div class="tech-item">
+        <div class="tech-ico">🎨</div>
+        <div class="tech-name">Glassmorphism</div>
+        <div class="tech-desc">Custom dark theme with depth</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- FEATURES -->
+<section id="features">
+  <div class="container features-sec">
+    <div class="feat-hdr reveal">
+      <p class="sec-label" style="color:var(--teal)">Features</p>
+      <h2 class="sec-title">Everything you need.<br/><span style="color:var(--muted);font-weight:400">Nothing you don't.</span></h2>
+    </div>
+    <div class="feat-grid">
+      <div class="feat-card wide reveal">
+        <div class="fc-icon m">📈</div>
+        <div class="fc-title">Intelligent Dashboard</div>
+        <p class="fc-desc">See your total balance, income vs expenses, and a live spending breakdown donut chart — all on one screen. No menus to dig through, no clutter.</p>
+      </div>
+      <div class="feat-card reveal">
+        <div class="fc-icon t">💸</div>
+        <div class="fc-title">Transaction Management</div>
+        <p class="fc-desc">Full CRUD with search, category filters, and automatic date grouping. Add, edit, or swipe to delete in seconds.</p>
+      </div>
+      <div class="feat-card reveal">
+        <div class="fc-icon p">🎯</div>
+        <div class="fc-title">Smart Budgeting</div>
+        <p class="fc-desc">Set monthly limits per category. Fynixo tracks your progress and warns you before you overspend.</p>
+      </div>
+      <div class="feat-card reveal">
+        <div class="fc-icon t">🔒</div>
+        <div class="fc-title">Privacy First</div>
+        <p class="fc-desc">All data lives in local SQLite — no cloud, no account, no subscription. You own your data entirely.</p>
+      </div>
+      <div class="feat-card wide reveal">
+        <div class="fc-icon m">✨</div>
+        <div class="fc-title">Premium Dark UI</div>
+        <p class="fc-desc">A glassmorphic design system with custom gradients, fluid screen transitions, and micro-animations that make managing money feel genuinely satisfying.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- STUDIO -->
+<section id="studio">
+  <div class="container studio-sec">
+    <div class="studio-inner">
+      <div class="studio-text reveal">
+        <p class="sec-label" style="color:var(--teal)">About Wishlogic</p>
+        <h2 class="sec-title">A one-person studio building <span style="color:var(--teal-l)">useful things.</span></h2>
+        <p>Wishlogic is an indie dev studio focused on making genuinely useful software — tools that respect your privacy, work offline, and get out of the way.</p>
+        <p>Fynixo is the first product. More apps and tools are in the works. If you like what you see here, this is just the beginning.</p>
+        <a href="mailto:hello@wishlogic.is-a.dev" class="btn-g" style="display:inline-flex;margin-top:.5rem;font-size:14px">Say hello &#8594;</a>
+      </div>
+      <div class="roadmap reveal">
+        <div class="roadmap-hdr">What&#39;s coming</div>
+        <div class="road-item">
+          <div class="road-ico">📱</div>
+          <div>
+            <div class="road-label">Fynixo for iOS</div>
+            <div class="road-sub">Native Apple experience</div>
+          </div>
+          <div class="road-tag soon">Soon</div>
+        </div>
+        <div class="road-item">
+          <div class="road-ico">🌐</div>
+          <div>
+            <div class="road-label">Web Tools</div>
+            <div class="road-sub">Lightweight browser apps</div>
+          </div>
+          <div class="road-tag plan">Planned</div>
+        </div>
+        <div class="road-item">
+          <div class="road-ico">📊</div>
+          <div>
+            <div class="road-label">Fynixo v2</div>
+            <div class="road-sub">Recurring, reports &amp; export</div>
+          </div>
+          <div class="road-tag plan">Planned</div>
+        </div>
+        <div class="road-item">
+          <div class="road-ico">🔧</div>
+          <div>
+            <div class="road-label">New Products</div>
+            <div class="road-sub">Unannounced — stay tuned</div>
+          </div>
+          <div class="road-tag tba">TBA</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CTA -->
+<section class="cta-sec">
+  <div class="cta-inner reveal">
+    <h2 class="cta-title">Ready to take control<br/>of your finances?</h2>
+    <p class="cta-sub">Free forever. No account. No cloud. Just download and go.</p>
+    <div class="cta-btns">
+      <a href="https://github.com/vishnurajkr/wishlogic/releases/download/v1.0.0/app-release.apk" class="btn-p">
+        Download Fynixo APK
+        <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M7.5 2v9M3.5 7.5l4 4 4-4" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <a href="mailto:hello@wishlogic.is-a.dev" class="btn-g">Contact Wishlogic</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
 <footer>
-© 2026 WishLogic
+  <div class="footer-inner">
+    <svg width="138" height="28" viewBox="0 0 152 32" fill="none" xmlns="http://www.w3.org/2000/svg" style="height:26px;width:auto">
+      <defs>
+        <linearGradient id="fm" x1="0" y1="24" x2="24" y2="2" gradientUnits="userSpaceOnUse">
+          <stop stop-color="#1D9E75"/><stop offset="1" stop-color="#7F77DD"/>
+        </linearGradient>
+        <linearGradient id="ft" x1="30" y1="0" x2="152" y2="0" gradientUnits="userSpaceOnUse">
+          <stop stop-color="#5DCAA5"/><stop offset="1" stop-color="#AFA9EC"/>
+        </linearGradient>
+      </defs>
+      <path d="M2 25 L7 8 L12 18 L17 8 L22 25" fill="none" stroke="url(#fm)" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="7" cy="8" r="2" fill="#1D9E75" opacity=".7"/>
+      <circle cx="17" cy="8" r="2" fill="#7F77DD" opacity=".7"/>
+      <circle cx="22" cy="25" r="2.2" fill="#AFA9EC"/>
+      <text x="31" y="22" font-family="'Syne',system-ui,sans-serif" font-size="17" font-weight="800" letter-spacing="-0.5" fill="url(#ft)">Wishlogic</text>
+    </svg>
+    <ul class="footer-links">
+      <li><a href="#product">Fynixo</a></li>
+      <li><a href="#features">Features</a></li>
+      <li><a href="#studio">Studio</a></li>
+      <li><a href="mailto:hello@wishlogic.is-a.dev">Contact</a></li>
+    </ul>
+    <p class="footer-copy">&#169; 2025 Wishlogic. All rights reserved.</p>
+  </div>
 </footer>
 
-</div>
+<script>
+const ham=document.getElementById('ham'),mob=document.getElementById('mobMenu');
+function closeMob(){mob.classList.remove('open');ham.setAttribute('aria-expanded','false')}
+ham.addEventListener('click',()=>{const o=mob.classList.toggle('open');ham.setAttribute('aria-expanded',String(o))});
 
+const io=new IntersectionObserver((es)=>{
+  let d=0;
+  es.forEach(e=>{
+    if(e.isIntersecting){
+      setTimeout(()=>e.target.classList.add('visible'),d);
+      d+=90;io.unobserve(e.target)
+    }
+  });
+},{threshold:.08});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
 </body>
 </html>
