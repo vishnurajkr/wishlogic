@@ -217,3 +217,45 @@
   }
   document.getElementById("year").textContent = new Date().getFullYear();
 })();
+
+// Keep form submissions on the page; only a provider confirmation clears input.
+(() => {
+  const form = document.querySelector('.contact-form');
+  if (!form) return;
+  const button = form.querySelector('button[type="submit"]');
+  const status = form.querySelector('.contact-status');
+  let sending = false;
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    if (sending || !form.reportValidity()) return;
+    if (!/^https:\/\/formspree\.io\/f\/[a-z0-9]+$/.test(form.action)) {
+      status.textContent = 'The contact form is not connected yet. Please try again later.';
+      status.dataset.state = 'error';
+      return;
+    }
+    sending = true;
+    button.disabled = true;
+    form.setAttribute('aria-busy', 'true');
+    status.dataset.state = 'sending';
+    status.textContent = 'Sending your message…';
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), 25000);
+    try {
+      const response = await fetch(form.action, {
+        method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' }, signal: controller.signal
+      });
+      if (!response.ok) throw new Error('Submission not accepted');
+      form.reset();
+      status.dataset.state = 'success';
+      status.textContent = 'Thanks for your message. We’ll be in touch.';
+    } catch {
+      status.dataset.state = 'error';
+      status.textContent = 'We couldn’t confirm delivery. Your message is still here; please try again in a moment.';
+    } finally {
+      clearTimeout(timer);
+      sending = false;
+      button.disabled = false;
+      form.removeAttribute('aria-busy');
+    }
+  });
+})();
